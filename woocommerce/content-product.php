@@ -1,0 +1,18 @@
+<?php
+/**
+ * Product loop item — Forge card.
+ *
+ * @package Forge
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+global $product;
+if ( empty( $product ) || ! $product->is_visible() ) {
+	return;
+}
+?>
+<li <?php wc_product_class( '', $product ); ?>>
+	<?php forge_product_card( $product ); ?>
+</li>
