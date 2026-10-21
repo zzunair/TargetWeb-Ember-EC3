@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FORGE_VERSION', '1.0.5' );
+define( 'FORGE_VERSION', '1.0.6' );
 define( 'FORGE_DIR', get_template_directory() );
 define( 'FORGE_URI', get_template_directory_uri() );
 

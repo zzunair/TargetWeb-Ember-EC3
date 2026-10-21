@@ -4,7 +4,7 @@ Theme URI: https://www.targetweb.com/
 Author: TargetWeb
 Author URI: https://www.targetweb.com/
 Description: Dark-mode WooCommerce theme for outdoor power equipment dealers. Charcoal surfaces, off-white text, and red as the only accent. Includes SEO, maintenance mode, contact forms, and TargetWeb lead-form and stock hooks.
-Version: 1.0.5
+Version: 1.0.6
 Requires at least: 6.3
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -236,14 +236,20 @@ label { display: block; font-size: var(--frg-fs-sm); color: var(--frg-muted); ma
 
 /* Mobile drawer + sticky bar */
 .frg-mobile__search { padding: 0 0 20px; }
-.frg-mobile details { border-bottom: 1px solid var(--frg-border); }
-.frg-mobile summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; font-family: var(--frg-font-heading); font-size: var(--frg-fs-h4); text-transform: uppercase; cursor: pointer; }
+.frg-mobile summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
 .frg-mobile summary::-webkit-details-marker { display: none; }
-.frg-mobile details[open] summary svg { transform: rotate(180deg); }
-.frg-mobile details ul { list-style: none; margin: 0 0 14px; padding: 0 0 0 4px; }
-.frg-mobile details li a { display: block; padding: 7px 0; color: var(--frg-muted); }
-.frg-mobile__links { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 4px; }
-.frg-mobile__links a { display: block; padding: 10px 0; font-weight: var(--frg-fw-semibold); letter-spacing: .06em; text-transform: uppercase; font-size: var(--frg-fs-sm); }
+.frg-mobile summary svg { flex: none; color: var(--frg-muted); transition: transform .2s, color .2s; }
+.frg-mobile details[open] > summary svg { transform: rotate(180deg); color: var(--frg-accent); }
+.frg-mobile__links { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--frg-border); }
+.frg-mobile__links > li { border-bottom: 1px solid var(--frg-border); }
+.frg-mobile__links > li > a, .frg-mobile__links > li > .frg-nav__link, .frg-mdept > summary { display: flex; align-items: center; width: 100%; min-height: 52px; padding: 0; font-weight: var(--frg-fw-semibold); letter-spacing: .08em; text-transform: uppercase; font-size: var(--frg-fs-sm); color: var(--frg-text); }
+.frg-mdept[open] > summary { color: var(--frg-accent); }
+.frg-mdept__list { list-style: none; margin: 0 0 16px; padding: 4px 0 4px 16px; border-left: 2px solid var(--frg-accent); }
+.frg-mdept__list > li > a, .frg-mdept__sub > summary { display: flex; align-items: center; min-height: 40px; color: var(--frg-muted); font-size: var(--frg-fs-sm); }
+.frg-mdept__list > li > a:hover, .frg-mdept__sub > summary:hover, .frg-mdept__sub[open] > summary { color: var(--frg-text); }
+.frg-mdept__sub ul { list-style: none; margin: 0 0 8px; padding: 0 0 0 14px; border-left: 1px solid var(--frg-border); }
+.frg-mdept__sub li a { display: block; padding: 7px 0; color: var(--frg-muted); font-size: var(--frg-fs-xs); }
+.frg-mdept__sub li a:hover { color: var(--frg-text); }
 .frg-mbar { display: none; }
 
 /* ==========================================================================
@@ -382,7 +388,8 @@ label { display: block; font-size: var(--frg-fs-sm); color: var(--frg-muted); ma
 .frg-pagination, .woocommerce-pagination { margin-top: 56px; }
 .frg-pagination .nav-links, .woocommerce-pagination ul { display: flex; gap: 8px; list-style: none; padding: 0; justify-content: center; flex-wrap: wrap; }
 .page-numbers { display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 12px; border: 1px solid var(--frg-border); border-radius: var(--frg-radius); }
-.page-numbers.current, .page-numbers:hover { background: var(--frg-accent); border-color: var(--frg-accent); color: var(--frg-on-accent); }
+.page-numbers.current, .page-numbers li:hover { background: var(--frg-accent); border-color: var(--frg-accent); color: var(--frg-on-accent); }
+.page-numbers li a:hover {color: #fff;}
 .frg-404 { text-align: center; padding: 120px 0; }
 .frg-404 .frg-search { max-width: 520px; margin: 32px auto; }
 .frg-searchbar { max-width: 640px; margin-bottom: 40px; }
