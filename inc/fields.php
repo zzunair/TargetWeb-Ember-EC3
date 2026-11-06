@@ -67,6 +67,7 @@ function forge_fields() {
 		'fields' => array(
 			'dealer_name'      => forge_f( 'Dealer name', 'text', 'Ember Outdoor Power' ),
 			'dealer_logo'      => forge_f( 'Logo (overrides site logo)', 'image', 0 ),
+			'logo_text'        => forge_f( 'Logo text (used when no logo image)', 'text', 'MowtivatedPwr' ),
 			'dealer_phone'     => forge_f( 'Phone', 'text', '' ),
 			'dealer_email'     => forge_f( 'Email', 'email', '' ),
 			'dealer_address'   => forge_f( 'Street address', 'text', '' ),
@@ -144,12 +145,18 @@ function forge_fields() {
 	$hero = array();
 	for ( $n = 1; $n <= 3; $n++ ) {
 		$hero[ "hero_{$n}_image" ]   = forge_f( "Slide {$n}: image", 'image', 0 );
-		$hero[ "hero_{$n}_eyebrow" ] = forge_f( "Slide {$n}: small label", 'text', 1 === $n ? 'Spring season' : '' );
-		$hero[ "hero_{$n}_title" ]   = forge_f( "Slide {$n}: heading (blank hides slide)", 'text', 1 === $n ? 'Power that works as hard as you do' : '' );
-		$hero[ "hero_{$n}_text" ]    = forge_f( "Slide {$n}: text", 'text', 1 === $n ? 'Mowers, saws, generators and more, backed by our service team.' : '' );
-		$hero[ "hero_{$n}_b1_label" ] = forge_f( "Slide {$n}: button 1 label", 'text', 1 === $n ? 'Shop equipment' : '' );
+		$hero_copy = array(
+			1 => array( 'Spring season', 'Power that works as hard as you do', 'Mowers, saws, generators and more, backed by our service team.', 'Shop equipment', 'Book service' ),
+			2 => array( 'In stock now', 'See it on the floor before you buy', 'Zero-turns, trimmers, blowers, and generators assembled and ready for pickup.', 'Browse equipment', 'Ask about delivery' ),
+			3 => array( 'Service shop', 'Tune-ups without the runaround', 'Drop the machine off, get a clear estimate, and pick it up when the work is done.', 'Book service', 'Call the shop' ),
+		);
+		$copy = $hero_copy[ $n ];
+		$hero[ "hero_{$n}_eyebrow" ] = forge_f( "Slide {$n}: small label", 'text', $copy[0] );
+		$hero[ "hero_{$n}_title" ]   = forge_f( "Slide {$n}: heading (blank hides slide)", 'text', $copy[1] );
+		$hero[ "hero_{$n}_text" ]    = forge_f( "Slide {$n}: text", 'text', $copy[2] );
+		$hero[ "hero_{$n}_b1_label" ] = forge_f( "Slide {$n}: button 1 label", 'text', $copy[3] );
 		$hero[ "hero_{$n}_b1_url" ]   = forge_f( "Slide {$n}: button 1 link", 'url', '' );
-		$hero[ "hero_{$n}_b2_label" ] = forge_f( "Slide {$n}: button 2 label", 'text', 1 === $n ? 'Book service' : '' );
+		$hero[ "hero_{$n}_b2_label" ] = forge_f( "Slide {$n}: button 2 label", 'text', $copy[4] );
 		$hero[ "hero_{$n}_b2_url" ]   = forge_f( "Slide {$n}: button 2 link", 'url', '' );
 	}
 	$f['hero'] = array( 'title' => 'Hero slider', 'fields' => $hero );

@@ -106,15 +106,8 @@ function forge_logo() {
 	if ( $id ) {
 		echo wp_kses_post( wp_get_attachment_image( $id, 'medium', false, array( 'alt' => get_bloginfo( 'name' ) ) ) );
 	} else {
-		$n     = forge_opt( 'dealer_name' );
-		$n     = $n ? $n : get_bloginfo( 'name' );
-		$parts = preg_split( '/\s+/', trim( (string) $n ) );
-		if ( is_array( $parts ) && count( $parts ) > 1 ) {
-			$last = array_pop( $parts );
-			echo esc_html( implode( ' ', $parts ) ) . ' <span>' . esc_html( $last ) . '</span>';
-		} else {
-			echo esc_html( $n );
-		}
+		$n = trim( (string) forge_opt( 'logo_text' ) );
+		echo esc_html( $n ? $n : 'MowtivatedPwr' );
 	}
 	echo '</a>';
 }
@@ -219,6 +212,14 @@ function forge_query_products( $source, $slug = '', $n = 4 ) {
 	return array_map( 'intval', $q->posts );
 }
 
+function forge_product_image_soon() {
+	$label = __( 'Product Image Coming Soon', 'forge' );
+	return '<span class="frg-img-soon" role="img" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</span>';
+}
+add_filter( 'woocommerce_placeholder_img', function () {
+	return forge_product_image_soon();
+}, 99 );
+
 function forge_product_card( $product ) {
 	if ( ! $product instanceof WC_Product ) {
 		$product = wc_get_product( $product );
@@ -237,7 +238,7 @@ function forge_product_card( $product ) {
 			<?php if ( $product->is_on_sale() && ! $hide ) : ?>
 				<span class="frg-badge"><?php esc_html_e( 'Sale', 'forge' ); ?></span>
 			<?php endif; ?>
-			<a href="<?php echo esc_url( $link ); ?>" tabindex="-1" aria-hidden="true"><?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?></a>
+			<a href="<?php echo esc_url( $link ); ?>" tabindex="-1" aria-hidden="true"><?php echo $product->get_image_id() ? wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ) : forge_product_image_soon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<div class="frg-card__body">
 			<div class="frg-card__copy">

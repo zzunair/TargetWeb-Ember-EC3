@@ -85,18 +85,18 @@ $forge_mega = forge_mega_terms();
 	<?php if ( forge_opt( 'secondary_on' ) ) : ?>
 		<div class="frg-secondary">
 			<nav class="frg-wrap" aria-label="<?php esc_attr_e( 'Secondary', 'forge' ); ?>">
-				<?php if ( has_nav_menu( 'forge_secondary' ) ) : ?>
-					<?php wp_nav_menu( array( 'theme_location' => 'forge_secondary', 'container' => false, 'depth' => 1, 'fallback_cb' => false ) ); ?>
-				<?php else : ?>
-					<ul>
-						<?php foreach ( forge_secondary_links() as $forge_l => $forge_u ) : ?>
-							<li><a href="<?php echo esc_url( $forge_u ); ?>"><?php echo esc_html( $forge_l ); ?></a></li>
-						<?php endforeach; ?>
-						<?php if ( forge_opt( 'dealer_phone' ) ) : ?>
-							<li class="frg-secondary__phone"><a href="<?php echo esc_url( forge_phone_href() ); ?>"><?php echo esc_html( forge_opt( 'dealer_phone' ) ); ?></a></li>
-						<?php endif; ?>
-					</ul>
-				<?php endif; ?>
+				<?php
+				wp_nav_menu(
+					tw_main_menu_args(
+						array(
+							'theme_location' => 'forge_secondary',
+							'container'      => false,
+							'depth'          => 1,
+							'fallback_cb'    => false,
+						)
+					)
+				);
+				?>
 			</nav>
 		</div>
 	<?php endif; ?>
@@ -136,9 +136,19 @@ $forge_mega = forge_mega_terms();
 				</li>
 			<?php endif; ?>
 			<li><a href="<?php echo esc_url( forge_deals_url() ); ?>" style="color:var(--frg-accent)"><?php echo esc_html( forge_opt( 'deals_label' ) ); ?></a></li>
-			<?php foreach ( forge_secondary_links() as $forge_l => $forge_u ) : ?>
-				<li><a href="<?php echo esc_url( $forge_u ); ?>"><?php echo esc_html( $forge_l ); ?></a></li>
-			<?php endforeach; ?>
+			<?php
+			wp_nav_menu(
+				tw_main_menu_args(
+					array(
+						'theme_location' => 'forge_secondary',
+						'container'      => false,
+						'items_wrap'     => '%3$s',
+						'depth'          => 1,
+						'fallback_cb'    => false,
+					)
+				)
+			);
+			?>
 			<li><button type="button" class="frg-nav__link" data-frg-open="wish"><?php esc_html_e( 'Saved items', 'forge' ); ?></button></li>
 		</ul>
 	</div>

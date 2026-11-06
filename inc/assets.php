@@ -50,7 +50,10 @@ add_action(
 	'wp_enqueue_scripts',
 	function () {
 		wp_enqueue_style( 'forge-fonts', forge_fonts_url(), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters
-		wp_enqueue_style( 'forge', get_stylesheet_uri(), array(), FORGE_VERSION );
+		wp_enqueue_style( 'forge', get_template_directory_uri() . '/style.css', array(), FORGE_VERSION );
+		if ( get_stylesheet() !== get_template() ) {
+			wp_enqueue_style( 'forge-child', get_stylesheet_uri(), array( 'forge' ), wp_get_theme()->get( 'Version' ) );
+		}
 		wp_add_inline_style( 'forge', forge_css_vars() );
 
 		wp_enqueue_script( 'forge', FORGE_URI . '/assets/js/forge.js', array( 'jquery' ), FORGE_VERSION, array( 'in_footer' => true, 'strategy' => 'defer' ) );

@@ -200,6 +200,8 @@ function forge_home_story() {
 function forge_home_journal() {
 	$q = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => (int) forge_opt( 'journal_count' ), 'ignore_sticky_posts' => true, 'no_found_rows' => true ) );
 	if ( ! $q->have_posts() ) {
+		echo '<section class="frg-section"><div class="frg-wrap"><div class="frg-head"><h2>' . esc_html( forge_opt( 'journal_title' ) ) . '</h2></div>';
+		echo '<p>' . esc_html__( 'Service notes, seasonal setup tips, and new equipment will show up here. Ask the counter if you want a reminder when the next tune-up clinic is posted.', 'forge' ) . '</p></div></section>';
 		return;
 	}
 	$blog = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/blog/' );
