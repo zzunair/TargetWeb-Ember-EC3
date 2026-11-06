@@ -85,18 +85,18 @@ $forge_mega = forge_mega_terms();
 	<?php if ( forge_opt( 'secondary_on' ) ) : ?>
 		<div class="frg-secondary">
 			<nav class="frg-wrap" aria-label="<?php esc_attr_e( 'Secondary', 'forge' ); ?>">
-				<?php if ( has_nav_menu( 'forge_secondary' ) ) : ?>
-					<?php wp_nav_menu( array( 'theme_location' => 'forge_secondary', 'container' => false, 'depth' => 1, 'fallback_cb' => false ) ); ?>
-				<?php else : ?>
-					<ul>
-						<?php foreach ( forge_secondary_links() as $forge_l => $forge_u ) : ?>
-							<li><a href="<?php echo esc_url( $forge_u ); ?>"><?php echo esc_html( $forge_l ); ?></a></li>
-						<?php endforeach; ?>
-						<?php if ( forge_opt( 'dealer_phone' ) ) : ?>
-							<li class="frg-secondary__phone"><a href="<?php echo esc_url( forge_phone_href() ); ?>"><?php echo esc_html( forge_opt( 'dealer_phone' ) ); ?></a></li>
-						<?php endif; ?>
-					</ul>
-				<?php endif; ?>
+				<?php
+				wp_nav_menu(
+					tw_main_menu_args(
+						array(
+							'theme_location' => 'forge_secondary',
+							'container'      => false,
+							'depth'          => 1,
+							'fallback_cb'    => false,
+						)
+					)
+				);
+				?>
 			</nav>
 		</div>
 	<?php endif; ?>
@@ -108,22 +108,47 @@ $forge_mega = forge_mega_terms();
 	<div class="frg-drawer__head"><?php forge_logo(); ?><button type="button" class="frg-iconlink" data-frg-close aria-label="<?php esc_attr_e( 'Close menu', 'forge' ); ?>"><?php echo forge_icon( 'close', 22 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button></div>
 	<div class="frg-drawer__body">
 		<div class="frg-mobile__search"><?php forge_search_form( 'frg-s-mobile' ); ?></div>
-		<?php foreach ( $forge_mega as $col ) : ?>
-			<details>
-				<summary><?php echo esc_html( $col['term']->name ); ?> <?php echo forge_icon( 'chev', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></summary>
-				<ul>
-					<li><a href="<?php echo esc_url( get_term_link( $col['term'] ) ); ?>"><?php esc_html_e( 'View all', 'forge' ); ?></a></li>
-					<?php foreach ( $col['kids'] as $kid ) : ?>
-						<li><a href="<?php echo esc_url( get_term_link( $kid ) ); ?>"><?php echo esc_html( $kid->name ); ?></a></li>
-					<?php endforeach; ?>
-				</ul>
-			</details>
-		<?php endforeach; ?>
 		<ul class="frg-mobile__links">
+			<?php if ( $forge_mega ) : ?>
+				<li>
+					<details class="frg-mdept">
+						<summary><?php esc_html_e( 'Departments', 'forge' ); ?> <?php echo forge_icon( 'chev', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></summary>
+						<ul class="frg-mdept__list">
+							<?php foreach ( $forge_mega as $col ) : ?>
+								<li>
+									<?php if ( $col['kids'] ) : ?>
+										<details class="frg-mdept__sub">
+											<summary><?php echo esc_html( $col['term']->name ); ?> <?php echo forge_icon( 'chev', 14 ); // phpcs:ignore WordPress.Security.EscapeOutput ?></summary>
+											<ul>
+												<li><a href="<?php echo esc_url( get_term_link( $col['term'] ) ); ?>"><?php esc_html_e( 'View all', 'forge' ); ?></a></li>
+												<?php foreach ( $col['kids'] as $kid ) : ?>
+													<li><a href="<?php echo esc_url( get_term_link( $kid ) ); ?>"><?php echo esc_html( $kid->name ); ?></a></li>
+												<?php endforeach; ?>
+											</ul>
+										</details>
+									<?php else : ?>
+										<a href="<?php echo esc_url( get_term_link( $col['term'] ) ); ?>"><?php echo esc_html( $col['term']->name ); ?></a>
+									<?php endif; ?>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</details>
+				</li>
+			<?php endif; ?>
 			<li><a href="<?php echo esc_url( forge_deals_url() ); ?>" style="color:var(--frg-accent)"><?php echo esc_html( forge_opt( 'deals_label' ) ); ?></a></li>
-			<?php foreach ( forge_secondary_links() as $forge_l => $forge_u ) : ?>
-				<li><a href="<?php echo esc_url( $forge_u ); ?>"><?php echo esc_html( $forge_l ); ?></a></li>
-			<?php endforeach; ?>
+			<?php
+			wp_nav_menu(
+				tw_main_menu_args(
+					array(
+						'theme_location' => 'forge_secondary',
+						'container'      => false,
+						'items_wrap'     => '%3$s',
+						'depth'          => 1,
+						'fallback_cb'    => false,
+					)
+				)
+			);
+			?>
 			<li><button type="button" class="frg-nav__link" data-frg-open="wish"><?php esc_html_e( 'Saved items', 'forge' ); ?></button></li>
 		</ul>
 	</div>
