@@ -216,7 +216,11 @@ function forge_product_image_soon() {
 	$label = __( 'Product Image Coming Soon', 'forge' );
 	return '<span class="frg-img-soon" role="img" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</span>';
 }
-add_filter( 'woocommerce_placeholder_img', function () {
+add_filter( 'woocommerce_placeholder_img', function ( $html ) {
+	// The products list in wp-admin uses this same placeholder. Keep the sentence on the storefront.
+	if ( is_admin() && ! wp_doing_ajax() ) {
+		return $html;
+	}
 	return forge_product_image_soon();
 }, 99 );
 
